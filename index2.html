@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'Kanit';
+            src: url('./Kanit/Kanit-Regular.ttf') format('truetype');
+        }
+        body {
+            background-color: burlywood;
+            font-family: 'Kanit';
+        }
+        h1 {
+            color: white;
+            text-align: center; 
+        }
+        #register {
+            font-size: 40px;
+        }
+        .input_name {
+            background-color: rgb(154, 157, 158);
+        }
+    </style>
+</head>
+<body>
+    <h1 id="register"> Register </h1>
+    Name : <input class="input_name" type="text" name="fname">
+    Surname : <input type="text" name="lname">
+    Gender :
+    <input type="radio" name="gender" value="male"> Male
+    <input type="radio" name="gender" value="female">
+    <br>
+    Age : <input type="number" name="age" min="1" max="120">
+    Hobbies :
+    <input type="checkbox" name="hobby1" value="Football"> Football
+    <input type="checkbox" name="hobby2" value="Reading"> Reading
+    <input type="checkbox" name="hobby3" value="Basketball"> Basketball
+    <br>
+    More detail <br>
+    <textarea name="detail" rows="5" cols="30"></textarea></textarea> <br>
+    <input type="submit" value="Submit"> 
+</body>
+</html>
