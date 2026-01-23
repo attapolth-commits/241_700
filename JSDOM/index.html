@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="userclick()">Click Me</button>
+    <div onclick="divclick()">Click div</div>
+    <script>    
+        function userclick(){
+            console.log("Button was Clicked");
+        }
+        function divclick(){
+            console.log("Div was Clicked")
+        }
+    </script>
+    ชื่อ : <input
+    id = "fname"
+    class="input"
+    type="test"
+    name="fname"
+    value="Test">
+    งานอดิเรก : 
+    <input type="checkbox" name ="fname" value=" Football" > Football
+    <input type="checkbox" name ="fname" value=" Basketball" > Basketball
+    <input type="checkbox" name ="fname" value=" Swimming" > Swimming
+    
+    <script>    
+    
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        console.log(checkboxes);
+        for (let i = 0;i < checkboxes.length ; i++){
+            console.log(checkboxes[i].value)
+        }
+        
+        let inputs = document.getElementsByClassName('input');
+        console.log(inputs.length); // 2
+        for (let i = 0; i < inputs.length; i++) {
+            console.log(inputs[i].value);
+        }
+        
+        let inputs = document.querySelector('input[name = fname]');
+        console.log(inputs.value); // 2*/
+    </script>
+    -->
+    <input type = "radio" name="gender" value="male" onchange="changeGender()"> Male
+    <input type = "radio" name="gender" value="female" onchange="changeGender()"> Female
+    <script>    
+        function changeGender(){
+            //Select All Gender
+            let genders = document.querySelectorAll('input[name = "gender"]');
+            //Checke what was selected
+            for (let i = 0; i < genders.length ; i++)
+                if (genders[i].checked){
+                    console.log("Gender Selected; " + genders[i].value);
+                }
+        }
+
+    </script>
+</body>
+</html>
