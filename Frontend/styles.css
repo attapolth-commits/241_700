@@ -1,0 +1,132 @@
+/* นำเข้าฟอนต์ภาษาไทยเพื่อให้ดูทันสมัย */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #f0f2f5; /* สีพื้นหลังแบบสบายตา */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* กล่องหลักของฟอร์ม (Card Style) */
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px; /* จำกัดความกว้างไม่ให้ยืดจนน่าเกลียด */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* เงาฟุ้งๆ */
+}
+
+/* หัวข้อฟอร์ม */
+.header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* จัดการ Layout ของแต่ละบรรทัด */
+.form-input {
+    margin-bottom: 15px;
+}
+
+/* Class flex ที่คุณใส่มา ผมกำหนดให้มันจัดกึ่งกลางแนวตั้ง */
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ระยะห่างระหว่าง label กับ input */
+}
+
+/* Label ด้านหน้า (ชื่อ, นามสกุล, อายุ) */
+.header-form {
+    min-width: 80px; /* กำหนดความกว้างขั้นต่ำ เพื่อให้ Input ตรงกัน */
+    font-weight: 500;
+    color: #555;
+}
+
+/* Input Text และ Number */
+.form {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form:focus, textarea:focus {
+    outline: none;
+    border-color: #007bff; /* สีฟ้าเวลาคลิกพิมพ์ */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* พื้นที่สำหรับ Radio Button (เพศ) */
+.gender .flex div {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* พื้นที่ Checkbox (งานอดิเรก) */
+/* เนื่องจากงานอดิเรกใน HTML ไม่ได้ใช้ class flex ผมจึงต้องจัดระยะห่างเอง */
+.form-input > div {
+    margin-top: 5px;
+    padding-left: 10px; /* ย่อหน้าเข้าไปนิดนึงให้ดูเป็นกลุ่ม */
+}
+
+/* Textarea คำอธิบาย */
+textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Kanit', sans-serif;
+    margin-top: 5px;
+    resize: vertical; /* ให้ยืดหดได้แค่แนวตั้ง */
+}
+
+/* ปุ่ม Submit */
+.center {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-family: 'Kanit', sans-serif;
+    border-radius: 50px; /* ปุ่มมน */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:active {
+    transform: scale(0.98); /* เอฟเฟกต์กดยุบลงนิดนึง */
+}
