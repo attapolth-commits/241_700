@@ -1,0 +1,5 @@
+docker ps --all
+
+docker ps
+
+docker run hello-world
