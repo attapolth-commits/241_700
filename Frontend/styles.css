@@ -130,3 +130,21 @@ textarea {
 .button:active {
     transform: scale(0.98); /* เอฟเฟกต์กดยุบลงนิดนึง */
 }
+
+.message{
+    background-color: lightgray;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: none;
+}
+
+.message.success {
+    background-color: lightgreen;
+    display: block;
+}
+
+.message.danger {
+    background-color: lightcoral;
+    display: block;
+}
