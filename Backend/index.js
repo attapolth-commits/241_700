@@ -47,43 +47,77 @@ app.get('/users', async (req, res) => {
     const results = await conn.query('SELECT * FROM users');
     res.json(results[0]);
 })
+const validateData = (userData) => {
+    let errors = [];
+    if (!userData.firstName) {
+        errors.push('First name is required');
+    }
+    if (!userData.lastName) {
+        errors.push('Last name is required');
+    }
+    if (!userData.age) {
+        errors.push('Age is required');
+    }
+    if (!userData.gender) {
+        errors.push('Gender is required');
+    }
+    if (!userData.description) {
+        errors.push('Description is required');
+    }
+    if (!userData.interests) {
+        errors.push('Interests are required');
+    }
+    return errors;
+}
 
 //path = POST /users สำหรับเพิ่ม user ใหม่
 app.post('/users', async (req, res) => {
     try {
         let user = req.body;
+        const errors = validateData(user);
+        if (errors.length > 0) {
+            throw {
+                message: 'Please fill in all required fields',
+                errors: errors
+            }
+        }
         const results = await conn.query('INSERT INTO users SET ?', user)
         res.json({
             message: 'User created successfully',
             data: results[0]
         });
-    } catch (error){
+    } catch (error) {
+        const errorMessage = error.message || 'Error adding user';
+        const errors = error.errors || [];
         console.error('Error connecting to the database:', error);
-        res.status(500).json({ error: 'Internal Server Error' })
+        res.status(500).json({
+            message: errorMessage,
+            errors: errors
+        });
     }
 })
 
+
+
 app.get('/testdb-new', async (req, res) => {
     try {
-
         const results = await conn.query('SELECT * FROM users');
         res.json(results[0]);
     } catch (err) {
         console.error('Error connecting to the database:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
 });
 
 app.get('/users/:id', async (req, res) => {
-    try{
+    try {
         let id = req.params.id;
         const results = await conn.query('SELECT * FROM users WHERE id = ?', id);
-        if (results[0].length === 0){
-            throw { statusCode: 404, message: 'User not found'};
+        if (results[0].length === 0) {
+            throw { statusCode: 404, message: 'User not found' };
         }
         res.json([0][0]);
-    }catch (error){
+    } catch (error) {
         console.error('Error fetching user:', error);
         let statusCode = error.statusCode || 500;
         res.status(statusCode).json({
@@ -92,12 +126,12 @@ app.get('/users/:id', async (req, res) => {
     }
 })
 
-app.put('/users/:id', async (req, res)=>{
-    try{
+app.put('/users/:id', async (req, res) => {
+    try {
         let id = req.params.id;
         let updataUser = req.body;
         const results = await conn.query('UP');
-    }catch (error) {
+    } catch (error) {
         console.error('Error updating user:', error.message);
         let statusCode = error.statusCode || 500;
         res.status(statusCode).json({
@@ -166,22 +200,30 @@ app.patch('/user/:id', (req, res) => {
     //send updated users to back
 
 })
-
-app.delete('/users/:id', (req, res) => {
-    let id = req.params.id;
-    // หา index จาก id ที่ต้องการลบ
-     let selectedIndex = users.findIndex(user => user.id == id);
-     
-    // ลบ user ออกจาก users
-     users.splice(selectedIndex, 1);
-    res.json({
-        message: 'User update successfully',
-        indexDelete: selectedIndex
-    });
-})
 */
+app.delete('/users/:id', async (req, res) => {
+    try {
+        let id = req.params.id
+        const results = await conn.query('DELETE FROM users WHERE id = ?', id)
+        if (results[0].affectedRows == 0) {
+            throw { statusCode: 404, message: 'User not found' };
+        }   
+        res.json({
+            message: 'User deleted successfully'
+        });
+    }
+    catch (error) {
+        console.error('Error deleting user:', error.message);
+        let statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            message: 'Error deleting user',
+            error: error.message
+        });
+    }
+})
 
 app.listen(port, async () => {
     await initMySQL();
     console.log(`Server is running on http://localhost:${port}`)
 });
+
