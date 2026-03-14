@@ -1,3 +1,51 @@
+const BaseURL = 'http://localhost:8000'
+
+let mode = 'CREATE'; //add mode data
+let selectedID = '';
+
+window.onload = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    console.log('id', id)
+    if (id) {
+        mode = 'EDIT';
+        selectedID = id;
+        
+        try{
+            const response = await axios.get(`${BaseURL}/users/${id}`);
+            console.log('response', response.data);
+            const user = response.data
+            
+            let firstNameDOM = document.querySelector('input[name=firstname]');
+            let lastNameDOM = document.querySelector('input[name=lastname]');
+            let ageDOM = document.querySelector('input[name=age]');
+            let descriptionDOM = document.querySelector('textarea[name=description]');
+            
+            firstNameDOM.value = user.firstname ;
+            lastNameDOM.value = user.lastname ;
+            ageDOM.value = user.age ?? '';
+            descriptionDOM.value = user.description ?? '';
+
+            let genderDOMs = document.querySelectorAll('input[name=gender]');
+            let interestDOMs = document.querySelectorAll('input[name=interests]');
+
+            for (let i = 0; i < genderDOMs.length; i++) {
+                if (genderDOMs[i].value == user.gender){
+                    genderDOMs[i].checked = true;
+                }
+            }
+            for (let i = 0; i < interestDOMs.length; i++) {
+                if (user.interests.includes(interestDOMs[i].value)){
+                    interestDOMs[i].checked = true;
+                }
+            }
+        }catch (error){
+            console.log('error: ' ,error);
+        }
+            
+    }
+}
+
 const validateData = (userData) => {
     let errors = [];
     if (!userData.firstName) {
@@ -48,7 +96,7 @@ const submitData = async () => {
             interests: interest
         }
         console.log('submitData', userData);
-    
+
         const errors = validateData(userData);
         if (errors.length > 0) {
             throw {
@@ -56,8 +104,14 @@ const submitData = async () => {
                 errors: errors
             }
         }
-        const response = await axios.post('http://localhost:8000/users', userData);
-        console.log('response', response)
+        if (mode == 'CREATE') {
+            const response = await axios.post(`${BaseURL}/users`, userData);
+            console.log('response', response.data)
+        } else {
+            const response = await axios.put(`${BaseURL}/users/${selectedID}`, userData);
+            console.log('response', response.data)
+        }
+
         messageDOM.innerText = "บันทึกข้อมูลสำเร็จ";
         messageDOM.className = "message success";
     } catch (error) {
@@ -71,15 +125,18 @@ const submitData = async () => {
         }
         
         let htmlData = '<div>';
-        htmlData += '<div>' + error.message + '</div>';
-        htmlData += '<ul>';
-        for (let i = 0; i < error.errors.length; i++) {
-            htmlData += '<li>' + error.errors[i] + '</li>';
+        htmlData += '<div>' + message + '</div>';
+        if (errors.length) {
+            htmlData += '<ul>';
+            for (let i = 0; i < errors.length; i++) {
+                htmlData += '<li>' + errors[i] + '</li>';
+            }
+            htmlData += '</ul>';
         }
-        htmlData += '</ul>';
         htmlData += '</div>';
 
         messageDOM.innerHTML = htmlData;
         messageDOM.className = "message danger";
     }
 }
+
